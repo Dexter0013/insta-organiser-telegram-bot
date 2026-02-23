@@ -1,0 +1,2420 @@
+{
+    "name": "Integration Telegram Bot",
+    "flow": [
+        {
+            "id": 2,
+            "module": "telegram:WatchUpdates",
+            "version": 1,
+            "parameters": {
+                "__IMTHOOK__": 2530404
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": -770,
+                    "y": -225
+                },
+                "restore": {
+                    "parameters": {
+                        "__IMTHOOK__": {
+                            "data": {
+                                "editable": "false"
+                            },
+                            "label": "TelegramBotWebhook"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "__IMTHOOK__",
+                        "type": "hook:telegramapi",
+                        "label": "Webhook",
+                        "required": true
+                    }
+                ]
+            }
+        },
+        {
+            "id": 56,
+            "module": "builtin:BasicRouter",
+            "version": 1,
+            "mapper": null,
+            "metadata": {
+                "designer": {
+                    "x": -343,
+                    "y": -84
+                }
+            },
+            "routes": [
+                {
+                    "flow": [
+                        {
+                            "id": 81,
+                            "module": "placeholder:Placeholder",
+                            "filter": null,
+                            "metadata": {
+                                "designer": {
+                                    "x": -50,
+                                    "y": -354
+                                }
+                            }
+                        },
+                        {
+                            "id": 4,
+                            "module": "apify:runActorNew",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 5417028
+                            },
+                            "filter": {
+                                "name": "Save Link",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{2.message.text}}",
+                                            "b": "instagram.com",
+                                            "o": "text:contain:ci"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "build": "latest",
+                                "memory": 1024,
+                                "actorId": "shu8hvrXbJbY3Eb9W",
+                                "runSync": "{{true}}",
+                                "timeout": "300",
+                                "actor_search_type": "store",
+                                "maxTotalChargeUsd": "1",
+                                "inputBodyshu8hvrXbJbY3Eb9W": "{\r\n  \"directUrls\": [\"{{trim(replace(2.message.text; \"/reels/\"; \"/reel/\"))}}\"],\r\n  \"resultsType\": \"details\",\r\n  \"resultsLimit\": 1,\r\n  \"addParentData\": false\r\n}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 289,
+                                    "y": -485
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "memory": {
+                                            "mode": "chose",
+                                            "label": "1024"
+                                        },
+                                        "actorId": {
+                                            "mode": "chose",
+                                            "label": "Instagram Scraper (apify/instagram-scraper)"
+                                        },
+                                        "runSync": {
+                                            "mode": "edit"
+                                        },
+                                        "actor_search_type": {
+                                            "label": "Apify Store Actors"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "apify"
+                                            },
+                                            "label": "My Apify API Token connection (slothslasher09@gmail.com)"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:apify2,apify",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "actor_search_type",
+                                        "type": "select",
+                                        "label": "Search Actors from",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "user",
+                                                "store"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "runSync",
+                                        "type": "boolean",
+                                        "label": "Run synchronously",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "build",
+                                        "type": "text",
+                                        "label": "Build"
+                                    },
+                                    {
+                                        "name": "timeout",
+                                        "type": "uinteger",
+                                        "label": "Timeout"
+                                    },
+                                    {
+                                        "name": "memory",
+                                        "type": "select",
+                                        "label": "Memory",
+                                        "validate": {
+                                            "enum": [
+                                                128,
+                                                256,
+                                                512,
+                                                1024,
+                                                2048,
+                                                4096,
+                                                8192,
+                                                16384,
+                                                32768
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "actorId",
+                                        "type": "select",
+                                        "label": "Actor",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "inputBodyshu8hvrXbJbY3Eb9W",
+                                        "type": "text",
+                                        "label": "Input JSON",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "maxTotalChargeUsd",
+                                        "type": "number",
+                                        "label": "Maximum cost per run"
+                                    },
+                                    {
+                                        "name": "maxItems",
+                                        "type": "hidden",
+                                        "label": "Maximum charged results"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 25,
+                            "module": "apify:fetchDatasetItems",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 5417028
+                            },
+                            "mapper": {
+                                "type": "clean",
+                                "limit": "100",
+                                "format": "json",
+                                "datasetId": "{{4.defaultDatasetId}}"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 543,
+                                    "y": -252
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "type": {
+                                            "mode": "edit"
+                                        },
+                                        "format": {
+                                            "mode": "edit"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "apify"
+                                            },
+                                            "label": "My Apify API Token connection (slothslasher09@gmail.com)"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:apify2,apify",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "datasetId",
+                                        "type": "text",
+                                        "label": "Dataset ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "type",
+                                        "type": "select",
+                                        "label": "Data transformation",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "clean",
+                                                "simplified",
+                                                "none"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "format",
+                                        "type": "select",
+                                        "label": "Format",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "json",
+                                                "csv",
+                                                "html",
+                                                "xml",
+                                                "rss",
+                                                "xlsx"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "limit",
+                                        "type": "uinteger",
+                                        "label": "Limit",
+                                        "validate": {
+                                            "max": 100000,
+                                            "min": 1
+                                        }
+                                    },
+                                    {
+                                        "name": "offset",
+                                        "type": "uinteger",
+                                        "label": "Offset",
+                                        "validate": {
+                                            "min": 0
+                                        }
+                                    },
+                                    {
+                                        "name": "fields",
+                                        "type": "text",
+                                        "label": "Fields"
+                                    },
+                                    {
+                                        "name": "omit",
+                                        "type": "text",
+                                        "label": "Omit Fields"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 8,
+                            "module": "gemini-ai:createACompletionGeminiPro",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 5417358
+                            },
+                            "mapper": {
+                                "model": "gemini-2.5-flash-lite",
+                                "contents": [
+                                    {
+                                        "role": "user",
+                                        "parts": [
+                                            {
+                                                "text": "You are an expert Instagram Copywriter. Identify what the post is about using the captions and summarise in a brief but engaging manner{{25.caption}}",
+                                                "type": "text"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "url_context": true,
+                                "generationConfig": {
+                                    "imageConfig": {},
+                                    "thinkingConfig": {},
+                                    "responseModalities": [
+                                        "text"
+                                    ]
+                                },
+                                "system_instruction": {},
+                                "google_search_context": true
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 857,
+                                    "y": -574
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "model": {
+                                            "mode": "chose",
+                                            "label": "Gemini 2.5 Flash-Lite"
+                                        },
+                                        "contents": {
+                                            "mode": "chose",
+                                            "items": [
+                                                {
+                                                    "role": {
+                                                        "mode": "chose",
+                                                        "label": "User"
+                                                    },
+                                                    "parts": {
+                                                        "mode": "chose",
+                                                        "items": [
+                                                            {
+                                                                "type": {
+                                                                    "mode": "chose",
+                                                                    "label": "Text"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "url_context": {
+                                            "mode": "chose"
+                                        },
+                                        "code_execution": {
+                                            "mode": "chose"
+                                        },
+                                        "safetySettings": {
+                                            "mode": "chose"
+                                        },
+                                        "generationConfig": {
+                                            "nested": {
+                                                "imageConfig": {
+                                                    "nested": {
+                                                        "imageSize": {
+                                                            "mode": "chose",
+                                                            "label": "Empty"
+                                                        }
+                                                    }
+                                                },
+                                                "stopSequences": {
+                                                    "mode": "chose"
+                                                },
+                                                "thinkingConfig": {
+                                                    "nested": {
+                                                        "thinking_level": {
+                                                            "mode": "chose",
+                                                            "label": "Empty"
+                                                        },
+                                                        "include_thoughts": {
+                                                            "mode": "chose"
+                                                        }
+                                                    }
+                                                },
+                                                "mediaResolution": {
+                                                    "mode": "chose",
+                                                    "label": "Empty"
+                                                },
+                                                "responseMimeType": {
+                                                    "mode": "chose",
+                                                    "label": "Empty"
+                                                },
+                                                "responseModalities": {
+                                                    "mode": "chose"
+                                                }
+                                            }
+                                        },
+                                        "system_instruction": {
+                                            "nested": {
+                                                "parts": {
+                                                    "mode": "chose"
+                                                }
+                                            }
+                                        },
+                                        "google_maps_context": {
+                                            "mode": "chose"
+                                        },
+                                        "google_search_context": {
+                                            "mode": "chose"
+                                        },
+                                        "file_search_store_context": {
+                                            "mode": "chose"
+                                        },
+                                        "function_declarations_context": {
+                                            "mode": "chose"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "gemini-ai-q9zyjp"
+                                            },
+                                            "label": "My Gemini AI connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:gemini-ai-q9zyjp",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "model",
+                                        "type": "select",
+                                        "label": "AI Model",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "contents",
+                                        "spec": [
+                                            {
+                                                "name": "role",
+                                                "type": "select",
+                                                "label": "Role",
+                                                "options": [
+                                                    {
+                                                        "label": "User",
+                                                        "value": "user"
+                                                    },
+                                                    {
+                                                        "label": "Model",
+                                                        "value": "model"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "name": "parts",
+                                                "spec": [
+                                                    {
+                                                        "name": "type",
+                                                        "type": "select",
+                                                        "label": "Message Type",
+                                                        "options": [
+                                                            {
+                                                                "label": "Text",
+                                                                "value": "text",
+                                                                "nested": [
+                                                                    {
+                                                                        "name": "text",
+                                                                        "type": "text",
+                                                                        "label": "Text",
+                                                                        "required": false
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "label": "File",
+                                                                "value": "file",
+                                                                "nested": [
+                                                                    {
+                                                                        "name": "file_data",
+                                                                        "spec": [
+                                                                            {
+                                                                                "name": "mime_type",
+                                                                                "type": "text",
+                                                                                "label": "Mime Type",
+                                                                                "required": false
+                                                                            },
+                                                                            {
+                                                                                "help": "You can use public or signed URLs as input by using the URLs.",
+                                                                                "name": "file_uri",
+                                                                                "type": "text",
+                                                                                "label": "File URI",
+                                                                                "required": false
+                                                                            }
+                                                                        ],
+                                                                        "type": "collection",
+                                                                        "label": "File Data",
+                                                                        "required": false
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "label": "Function Call",
+                                                                "value": "functionCall",
+                                                                "nested": [
+                                                                    {
+                                                                        "name": "functionCall",
+                                                                        "spec": [
+                                                                            {
+                                                                                "help": "The name of the function to call.",
+                                                                                "name": "name",
+                                                                                "type": "text",
+                                                                                "label": "Name",
+                                                                                "required": true,
+                                                                                "validate": {
+                                                                                    "max": 64
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "help": "The function parameters and values in JSON object format.",
+                                                                                "name": "args",
+                                                                                "type": "json",
+                                                                                "label": "Arguments"
+                                                                            },
+                                                                            {
+                                                                                "help": "The unique ID of the function call.",
+                                                                                "name": "id",
+                                                                                "type": "text",
+                                                                                "label": "Function Call ID"
+                                                                            }
+                                                                        ],
+                                                                        "type": "collection",
+                                                                        "label": "Function Call"
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "label": "Function Response",
+                                                                "value": "functionResponse",
+                                                                "nested": [
+                                                                    {
+                                                                        "name": "functionResponse",
+                                                                        "spec": [
+                                                                            {
+                                                                                "help": "The name of the function to call.",
+                                                                                "name": "name",
+                                                                                "type": "text",
+                                                                                "label": "Name",
+                                                                                "required": true,
+                                                                                "validate": {
+                                                                                    "max": 64
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "help": "The function response in JSON object format.",
+                                                                                "name": "response",
+                                                                                "type": "json",
+                                                                                "label": "Response",
+                                                                                "required": true
+                                                                            }
+                                                                        ],
+                                                                        "type": "collection",
+                                                                        "label": "Function Response"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "name": "thoughtSignature",
+                                                        "type": "text",
+                                                        "label": "Thought Signature"
+                                                    }
+                                                ],
+                                                "type": "array",
+                                                "label": "Parts"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Messages",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "system_instruction",
+                                        "spec": [
+                                            {
+                                                "name": "parts",
+                                                "spec": {
+                                                    "name": "value",
+                                                    "spec": [
+                                                        {
+                                                            "name": "text",
+                                                            "type": "text",
+                                                            "label": "Value"
+                                                        }
+                                                    ],
+                                                    "type": "collection",
+                                                    "label": "Prompt"
+                                                },
+                                                "type": "array",
+                                                "label": "Prompts"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "System Instructions"
+                                    },
+                                    {
+                                        "name": "safetySettings",
+                                        "spec": [
+                                            {
+                                                "name": "category",
+                                                "type": "select",
+                                                "label": "Category",
+                                                "options": [
+                                                    {
+                                                        "label": "Harassment content",
+                                                        "value": "HARM_CATEGORY_HARASSMENT"
+                                                    },
+                                                    {
+                                                        "label": "Hate speech and content",
+                                                        "value": "HARM_CATEGORY_HATE_SPEECH"
+                                                    },
+                                                    {
+                                                        "label": "Sexually explicit content.",
+                                                        "value": "HARM_CATEGORY_SEXUALLY_EXPLICIT"
+                                                    },
+                                                    {
+                                                        "label": "Dangerous content:",
+                                                        "value": "HARM_CATEGORY_DANGEROUS_CONTENT"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "name": "threshold",
+                                                "type": "select",
+                                                "label": "Threshold",
+                                                "options": [
+                                                    {
+                                                        "label": "Block low and above.",
+                                                        "value": "BLOCK_LOW_AND_ABOVE"
+                                                    },
+                                                    {
+                                                        "label": "Block medium and above.",
+                                                        "value": "BLOCK_MEDIUM_AND_ABOVE"
+                                                    },
+                                                    {
+                                                        "label": "Block only high.",
+                                                        "value": "BLOCK_ONLY_HIGH"
+                                                    },
+                                                    {
+                                                        "label": "Block none.",
+                                                        "value": "BLOCK_NONE"
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Safety Settings"
+                                    },
+                                    {
+                                        "name": "generationConfig",
+                                        "spec": [
+                                            {
+                                                "name": "stopSequences",
+                                                "spec": {
+                                                    "name": "value",
+                                                    "type": "text",
+                                                    "label": "Stop Sequence"
+                                                },
+                                                "type": "array",
+                                                "label": "Stop Sequences"
+                                            },
+                                            {
+                                                "name": "responseModalities",
+                                                "type": "select",
+                                                "label": "Response Modalities",
+                                                "multiple": true,
+                                                "validate": {
+                                                    "enum": [
+                                                        "text",
+                                                        "image"
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "name": "maxOutputTokens",
+                                                "type": "number",
+                                                "label": "Max Output Tokens"
+                                            },
+                                            {
+                                                "name": "temperature",
+                                                "type": "number",
+                                                "label": "Temperature",
+                                                "validate": {
+                                                    "max": 1,
+                                                    "min": 0
+                                                }
+                                            },
+                                            {
+                                                "name": "topP",
+                                                "type": "number",
+                                                "label": "Top P",
+                                                "validate": {
+                                                    "max": 1,
+                                                    "min": 0
+                                                }
+                                            },
+                                            {
+                                                "name": "topK",
+                                                "type": "number",
+                                                "label": "Top K"
+                                            },
+                                            {
+                                                "name": "thinkingConfig",
+                                                "spec": [
+                                                    {
+                                                        "name": "thinkingBudget",
+                                                        "type": "number",
+                                                        "label": "Thinking Budget"
+                                                    },
+                                                    {
+                                                        "name": "include_thoughts",
+                                                        "type": "boolean",
+                                                        "label": "Include Thoughts"
+                                                    },
+                                                    {
+                                                        "name": "thinking_level",
+                                                        "type": "select",
+                                                        "label": "Thinking Level",
+                                                        "validate": {
+                                                            "enum": [
+                                                                "low",
+                                                                "high"
+                                                            ]
+                                                        }
+                                                    }
+                                                ],
+                                                "type": "collection",
+                                                "label": "Thinking Config"
+                                            },
+                                            {
+                                                "name": "mediaResolution",
+                                                "type": "select",
+                                                "label": "Media Resolution",
+                                                "validate": {
+                                                    "enum": [
+                                                        "media_resolution_low",
+                                                        "media_resolution_medium",
+                                                        "media_resolution_high"
+                                                    ]
+                                                }
+                                            },
+                                            {
+                                                "name": "imageConfig",
+                                                "spec": [
+                                                    {
+                                                        "name": "imageSize",
+                                                        "type": "select",
+                                                        "label": "Image Size",
+                                                        "validate": {
+                                                            "enum": [
+                                                                "1K",
+                                                                "2K",
+                                                                "4K"
+                                                            ]
+                                                        }
+                                                    }
+                                                ],
+                                                "type": "collection",
+                                                "label": "Image Configuration"
+                                            },
+                                            {
+                                                "name": "responseMimeType",
+                                                "type": "select",
+                                                "label": "Response Format"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Generation configurations"
+                                    },
+                                    {
+                                        "name": "tools",
+                                        "type": "any",
+                                        "label": "Tools"
+                                    },
+                                    {
+                                        "name": "tool_config",
+                                        "type": "any",
+                                        "label": "Tool Config"
+                                    },
+                                    {
+                                        "name": "function_declarations_context",
+                                        "type": "boolean",
+                                        "label": "Function Declarations Grounding"
+                                    },
+                                    {
+                                        "name": "url_context",
+                                        "type": "boolean",
+                                        "label": "URL Context"
+                                    },
+                                    {
+                                        "name": "google_search_context",
+                                        "type": "boolean",
+                                        "label": "Google Search Grounding"
+                                    },
+                                    {
+                                        "name": "code_execution",
+                                        "type": "boolean",
+                                        "label": "Code Execution"
+                                    },
+                                    {
+                                        "name": "google_maps_context",
+                                        "type": "boolean",
+                                        "label": "Google Maps Grounding"
+                                    },
+                                    {
+                                        "name": "file_search_store_context",
+                                        "type": "boolean",
+                                        "label": "File Search Store Context"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 54,
+                            "module": "google-sheets:addRow",
+                            "version": 2,
+                            "parameters": {
+                                "__IMTCONN__": 5420707
+                            },
+                            "mapper": {
+                                "from": "drive",
+                                "mode": "select",
+                                "values": {
+                                    "0": "{{25.timestamp}}",
+                                    "1": "{{25.inputUrl}}",
+                                    "2": "{{8.result}}"
+                                },
+                                "sheetId": "Sheet1",
+                                "spreadsheetId": "/1Gzj6KkhznwifsNvdIjrbhxG4Vkc2VdHcSD37U92V86k",
+                                "includesHeaders": true,
+                                "insertDataOption": "INSERT_ROWS",
+                                "useColumnHeaders": false,
+                                "valueInputOption": "USER_ENTERED",
+                                "insertUnformatted": false
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1327,
+                                    "y": -553
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "from": {
+                                            "label": "My Drive"
+                                        },
+                                        "mode": {
+                                            "label": "Search by path"
+                                        },
+                                        "sheetId": {
+                                            "label": "Sheet1"
+                                        },
+                                        "spreadsheetId": {
+                                            "path": [
+                                                "Insta Link output"
+                                            ]
+                                        },
+                                        "includesHeaders": {
+                                            "label": "Yes"
+                                        },
+                                        "insertDataOption": {
+                                            "mode": "chose",
+                                            "label": "Insert rows"
+                                        },
+                                        "useColumnHeaders": {
+                                            "label": "No",
+                                            "nested": [
+                                                {
+                                                    "name": "values",
+                                                    "spec": [
+                                                        {
+                                                            "name": "0",
+                                                            "type": "text",
+                                                            "label": "TimeStamp (A)"
+                                                        },
+                                                        {
+                                                            "name": "1",
+                                                            "type": "text",
+                                                            "label": "Link (B)"
+                                                        },
+                                                        {
+                                                            "name": "2",
+                                                            "type": "text",
+                                                            "label": "Vibe (C)"
+                                                        },
+                                                        {
+                                                            "name": "3",
+                                                            "type": "text",
+                                                            "label": "(D)"
+                                                        },
+                                                        {
+                                                            "name": "4",
+                                                            "type": "text",
+                                                            "label": "(E)"
+                                                        },
+                                                        {
+                                                            "name": "5",
+                                                            "type": "text",
+                                                            "label": "(F)"
+                                                        },
+                                                        {
+                                                            "name": "6",
+                                                            "type": "text",
+                                                            "label": "(G)"
+                                                        },
+                                                        {
+                                                            "name": "7",
+                                                            "type": "text",
+                                                            "label": "(H)"
+                                                        },
+                                                        {
+                                                            "name": "8",
+                                                            "type": "text",
+                                                            "label": "(I)"
+                                                        },
+                                                        {
+                                                            "name": "9",
+                                                            "type": "text",
+                                                            "label": "(J)"
+                                                        },
+                                                        {
+                                                            "name": "10",
+                                                            "type": "text",
+                                                            "label": "(K)"
+                                                        },
+                                                        {
+                                                            "name": "11",
+                                                            "type": "text",
+                                                            "label": "(L)"
+                                                        },
+                                                        {
+                                                            "name": "12",
+                                                            "type": "text",
+                                                            "label": "(M)"
+                                                        },
+                                                        {
+                                                            "name": "13",
+                                                            "type": "text",
+                                                            "label": "(N)"
+                                                        },
+                                                        {
+                                                            "name": "14",
+                                                            "type": "text",
+                                                            "label": "(O)"
+                                                        },
+                                                        {
+                                                            "name": "15",
+                                                            "type": "text",
+                                                            "label": "(P)"
+                                                        },
+                                                        {
+                                                            "name": "16",
+                                                            "type": "text",
+                                                            "label": "(Q)"
+                                                        },
+                                                        {
+                                                            "name": "17",
+                                                            "type": "text",
+                                                            "label": "(R)"
+                                                        },
+                                                        {
+                                                            "name": "18",
+                                                            "type": "text",
+                                                            "label": "(S)"
+                                                        },
+                                                        {
+                                                            "name": "19",
+                                                            "type": "text",
+                                                            "label": "(T)"
+                                                        },
+                                                        {
+                                                            "name": "20",
+                                                            "type": "text",
+                                                            "label": "(U)"
+                                                        },
+                                                        {
+                                                            "name": "21",
+                                                            "type": "text",
+                                                            "label": "(V)"
+                                                        },
+                                                        {
+                                                            "name": "22",
+                                                            "type": "text",
+                                                            "label": "(W)"
+                                                        },
+                                                        {
+                                                            "name": "23",
+                                                            "type": "text",
+                                                            "label": "(X)"
+                                                        },
+                                                        {
+                                                            "name": "24",
+                                                            "type": "text",
+                                                            "label": "(Y)"
+                                                        },
+                                                        {
+                                                            "name": "25",
+                                                            "type": "text",
+                                                            "label": "(Z)"
+                                                        }
+                                                    ],
+                                                    "type": "collection",
+                                                    "label": "Values in columns",
+                                                    "metadata": [
+                                                        [
+                                                            [
+                                                                "TimeStamp",
+                                                                "Link",
+                                                                "Vibe"
+                                                            ]
+                                                        ]
+                                                    ]
+                                                }
+                                            ]
+                                        },
+                                        "valueInputOption": {
+                                            "mode": "chose",
+                                            "label": "User entered"
+                                        },
+                                        "insertUnformatted": {
+                                            "mode": "chose"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "google"
+                                            },
+                                            "label": "My Google connection (slothslasher09@gmail.com)"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:google",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "mode",
+                                        "type": "select",
+                                        "label": "Search Method",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "select",
+                                                "fromAll",
+                                                "map"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "insertUnformatted",
+                                        "type": "boolean",
+                                        "label": "Unformatted",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "valueInputOption",
+                                        "type": "select",
+                                        "label": "Value input option",
+                                        "validate": {
+                                            "enum": [
+                                                "USER_ENTERED",
+                                                "RAW"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "insertDataOption",
+                                        "type": "select",
+                                        "label": "Insert data option",
+                                        "validate": {
+                                            "enum": [
+                                                "INSERT_ROWS",
+                                                "OVERWRITE"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "from",
+                                        "type": "select",
+                                        "label": "Drive",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "drive",
+                                                "share",
+                                                "team"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "spreadsheetId",
+                                        "type": "file",
+                                        "label": "Spreadsheet Name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "sheetId",
+                                        "type": "select",
+                                        "label": "Sheet Name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "includesHeaders",
+                                        "type": "select",
+                                        "label": "Table contains headers",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                true,
+                                                false
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "useColumnHeaders",
+                                        "type": "select",
+                                        "label": "Use column headers as IDs of the columns",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                true,
+                                                false
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "values",
+                                        "spec": [
+                                            {
+                                                "name": "0",
+                                                "type": "text",
+                                                "label": "TimeStamp (A)"
+                                            },
+                                            {
+                                                "name": "1",
+                                                "type": "text",
+                                                "label": "Link (B)"
+                                            },
+                                            {
+                                                "name": "2",
+                                                "type": "text",
+                                                "label": "Vibe (C)"
+                                            },
+                                            {
+                                                "name": "3",
+                                                "type": "text",
+                                                "label": "(D)"
+                                            },
+                                            {
+                                                "name": "4",
+                                                "type": "text",
+                                                "label": "(E)"
+                                            },
+                                            {
+                                                "name": "5",
+                                                "type": "text",
+                                                "label": "(F)"
+                                            },
+                                            {
+                                                "name": "6",
+                                                "type": "text",
+                                                "label": "(G)"
+                                            },
+                                            {
+                                                "name": "7",
+                                                "type": "text",
+                                                "label": "(H)"
+                                            },
+                                            {
+                                                "name": "8",
+                                                "type": "text",
+                                                "label": "(I)"
+                                            },
+                                            {
+                                                "name": "9",
+                                                "type": "text",
+                                                "label": "(J)"
+                                            },
+                                            {
+                                                "name": "10",
+                                                "type": "text",
+                                                "label": "(K)"
+                                            },
+                                            {
+                                                "name": "11",
+                                                "type": "text",
+                                                "label": "(L)"
+                                            },
+                                            {
+                                                "name": "12",
+                                                "type": "text",
+                                                "label": "(M)"
+                                            },
+                                            {
+                                                "name": "13",
+                                                "type": "text",
+                                                "label": "(N)"
+                                            },
+                                            {
+                                                "name": "14",
+                                                "type": "text",
+                                                "label": "(O)"
+                                            },
+                                            {
+                                                "name": "15",
+                                                "type": "text",
+                                                "label": "(P)"
+                                            },
+                                            {
+                                                "name": "16",
+                                                "type": "text",
+                                                "label": "(Q)"
+                                            },
+                                            {
+                                                "name": "17",
+                                                "type": "text",
+                                                "label": "(R)"
+                                            },
+                                            {
+                                                "name": "18",
+                                                "type": "text",
+                                                "label": "(S)"
+                                            },
+                                            {
+                                                "name": "19",
+                                                "type": "text",
+                                                "label": "(T)"
+                                            },
+                                            {
+                                                "name": "20",
+                                                "type": "text",
+                                                "label": "(U)"
+                                            },
+                                            {
+                                                "name": "21",
+                                                "type": "text",
+                                                "label": "(V)"
+                                            },
+                                            {
+                                                "name": "22",
+                                                "type": "text",
+                                                "label": "(W)"
+                                            },
+                                            {
+                                                "name": "23",
+                                                "type": "text",
+                                                "label": "(X)"
+                                            },
+                                            {
+                                                "name": "24",
+                                                "type": "text",
+                                                "label": "(Y)"
+                                            },
+                                            {
+                                                "name": "25",
+                                                "type": "text",
+                                                "label": "(Z)"
+                                            }
+                                        ],
+                                        "type": "collection",
+                                        "label": "Values in columns",
+                                        "metadata": [
+                                            [
+                                                [
+                                                    "TimeStamp",
+                                                    "Link",
+                                                    "Vibe"
+                                                ]
+                                            ]
+                                        ]
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 10,
+                            "module": "telegram:SendReplyMessage",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 5416885
+                            },
+                            "mapper": {
+                                "text": "{{8.candidates[].content.parts[].text}}           \n\nhttps://docs.google.com/spreadsheets/d/1Gzj6KkhznwifsNvdIjrbhxG4Vkc2VdHcSD37U92V86k/edit?gid=0#gid=0",
+                                "chatId": "{{2.message.chat.id}}",
+                                "parseMode": "HTML",
+                                "replyMarkup": "",
+                                "messageThreadId": "",
+                                "replyToMessageId": "",
+                                "replyMarkupAssembleType": "reply_markup_enter"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1518,
+                                    "y": -343
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "parseMode": {
+                                            "label": "HTML"
+                                        },
+                                        "disableNotification": {
+                                            "mode": "chose"
+                                        },
+                                        "replyMarkupAssembleType": {
+                                            "label": "Enter the Reply Markup"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "telegram"
+                                            },
+                                            "label": "My Telegram Bot connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:telegram",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "chatId",
+                                        "type": "text",
+                                        "label": "Chat ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "messageThreadId",
+                                        "type": "number",
+                                        "label": "Message Thread ID"
+                                    },
+                                    {
+                                        "name": "parseMode",
+                                        "type": "select",
+                                        "label": "Parse Mode",
+                                        "validate": {
+                                            "enum": [
+                                                "Markdown",
+                                                "HTML"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "disableNotification",
+                                        "type": "boolean",
+                                        "label": "Disable Notifications"
+                                    },
+                                    {
+                                        "name": "disableWebPagePreview",
+                                        "type": "boolean",
+                                        "label": "Disable Link Previews"
+                                    },
+                                    {
+                                        "name": "replyToMessageId",
+                                        "type": "number",
+                                        "label": "Original Message ID"
+                                    },
+                                    {
+                                        "name": "replyMarkupAssembleType",
+                                        "type": "select",
+                                        "label": "Enter/Assemble the Reply Markup Field",
+                                        "validate": {
+                                            "enum": [
+                                                "reply_markup_enter",
+                                                "reply_markup_assemble"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "replyMarkup",
+                                        "type": "text",
+                                        "label": "Reply Markup"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 80,
+                            "module": "placeholder:Placeholder",
+                            "filter": null,
+                            "metadata": {
+                                "designer": {
+                                    "x": -9,
+                                    "y": -29
+                                }
+                            }
+                        },
+                        {
+                            "id": 86,
+                            "module": "google-sheets:filterRows",
+                            "version": 2,
+                            "parameters": {
+                                "__IMTCONN__": 5420707
+                            },
+                            "filter": {
+                                "name": "Search Vault",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{2.message.text}}",
+                                            "b": "instagram.com",
+                                            "o": "text:notcontain:ci"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "from": "drive",
+                                "filter": [
+                                    [
+                                        {
+                                            "a": "C",
+                                            "b": "{{2.message.text}}",
+                                            "o": "text:contain:ci"
+                                        }
+                                    ]
+                                ],
+                                "orderBy": "__ROW_NUMBER__",
+                                "sheetId": "Sheet1",
+                                "fieldType": "string",
+                                "sortOrder": "desc",
+                                "spreadsheetId": "1Gzj6KkhznwifsNvdIjrbhxG4Vkc2VdHcSD37U92V86k",
+                                "tableFirstRow": "A1:CZ1",
+                                "includesHeaders": true,
+                                "valueRenderOption": "FORMATTED_VALUE",
+                                "dateTimeRenderOption": "FORMATTED_STRING"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 410,
+                                    "y": 44
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "from": {
+                                            "label": "Select from My Drive"
+                                        },
+                                        "orderBy": {
+                                            "mode": "chose",
+                                            "label": "Row number"
+                                        },
+                                        "sheetId": {
+                                            "mode": "chose",
+                                            "label": "Sheet1"
+                                        },
+                                        "fieldType": {
+                                            "mode": "chose",
+                                            "label": "String"
+                                        },
+                                        "sortOrder": {
+                                            "mode": "chose",
+                                            "label": "Descending"
+                                        },
+                                        "spreadsheetId": {
+                                            "mode": "chose",
+                                            "label": "Insta Link output"
+                                        },
+                                        "tableFirstRow": {
+                                            "label": "A-CZ"
+                                        },
+                                        "includesHeaders": {
+                                            "mode": "chose",
+                                            "label": "Yes"
+                                        },
+                                        "valueRenderOption": {
+                                            "mode": "chose",
+                                            "label": "Formatted value"
+                                        },
+                                        "dateTimeRenderOption": {
+                                            "mode": "chose",
+                                            "label": "Formatted string"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "google"
+                                            },
+                                            "label": "My Google connection (slothslasher09@gmail.com)"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:google",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "from",
+                                        "type": "select",
+                                        "label": "Search Method",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "drive",
+                                                "share"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "valueRenderOption",
+                                        "type": "select",
+                                        "label": "Value render option",
+                                        "validate": {
+                                            "enum": [
+                                                "FORMATTED_VALUE",
+                                                "UNFORMATTED_VALUE",
+                                                "FORMULA"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "dateTimeRenderOption",
+                                        "type": "select",
+                                        "label": "Date and time render option",
+                                        "validate": {
+                                            "enum": [
+                                                "SERIAL_NUMBER",
+                                                "FORMATTED_STRING"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "limit",
+                                        "type": "uinteger",
+                                        "label": "Limit"
+                                    },
+                                    {
+                                        "name": "spreadsheetId",
+                                        "type": "select",
+                                        "label": "Spreadsheet Name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "sheetId",
+                                        "type": "select",
+                                        "label": "Sheet Name",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "includesHeaders",
+                                        "type": "select",
+                                        "label": "Table contains headers",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                true,
+                                                false
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "tableFirstRow",
+                                        "type": "select",
+                                        "label": "Column range",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "A1:Z1",
+                                                "A1:BZ1",
+                                                "A1:CZ1",
+                                                "A1:DZ1",
+                                                "A1:MZ1",
+                                                "A1:ZZ1",
+                                                "A1:AZZ1",
+                                                "A1:BZZ1",
+                                                "A1:CZZ1",
+                                                "A1:DZZ1",
+                                                "A1:MZZ1",
+                                                "A1:ZZZ1"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "filter",
+                                        "type": "filter",
+                                        "label": "Filter",
+                                        "options": "rpc://google-sheets/2/rpcGetFilterKeys?includesHeaders=true"
+                                    },
+                                    {
+                                        "name": "orderBy",
+                                        "type": "select",
+                                        "label": "Order by"
+                                    },
+                                    {
+                                        "name": "sortOrder",
+                                        "type": "select",
+                                        "label": "Sort order",
+                                        "validate": {
+                                            "enum": [
+                                                "asc",
+                                                "desc"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "fieldType",
+                                        "type": "select",
+                                        "label": "Field Type",
+                                        "validate": {
+                                            "enum": [
+                                                "string",
+                                                "number",
+                                                "date"
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "name": "__IMTLENGTH__",
+                                        "type": "uinteger",
+                                        "label": "Total number of bundles"
+                                    },
+                                    {
+                                        "name": "__IMTINDEX__",
+                                        "type": "uinteger",
+                                        "label": "Bundle order position"
+                                    },
+                                    {
+                                        "name": "__ROW_NUMBER__",
+                                        "type": "number",
+                                        "label": "Row number"
+                                    },
+                                    {
+                                        "name": "__SPREADSHEET_ID__",
+                                        "type": "text",
+                                        "label": "Spreadsheet ID"
+                                    },
+                                    {
+                                        "name": "__SHEET__",
+                                        "type": "text",
+                                        "label": "Sheet"
+                                    },
+                                    {
+                                        "name": "0",
+                                        "type": "text",
+                                        "label": "TimeStamp (A)"
+                                    },
+                                    {
+                                        "name": "1",
+                                        "type": "text",
+                                        "label": "Link (B)"
+                                    },
+                                    {
+                                        "name": "2",
+                                        "type": "text",
+                                        "label": "Vibe (C)"
+                                    },
+                                    {
+                                        "name": "3",
+                                        "type": "text",
+                                        "label": "(D)"
+                                    },
+                                    {
+                                        "name": "4",
+                                        "type": "text",
+                                        "label": "(E)"
+                                    },
+                                    {
+                                        "name": "5",
+                                        "type": "text",
+                                        "label": "(F)"
+                                    },
+                                    {
+                                        "name": "6",
+                                        "type": "text",
+                                        "label": "(G)"
+                                    },
+                                    {
+                                        "name": "7",
+                                        "type": "text",
+                                        "label": "(H)"
+                                    },
+                                    {
+                                        "name": "8",
+                                        "type": "text",
+                                        "label": "(I)"
+                                    },
+                                    {
+                                        "name": "9",
+                                        "type": "text",
+                                        "label": "(J)"
+                                    },
+                                    {
+                                        "name": "10",
+                                        "type": "text",
+                                        "label": "(K)"
+                                    },
+                                    {
+                                        "name": "11",
+                                        "type": "text",
+                                        "label": "(L)"
+                                    },
+                                    {
+                                        "name": "12",
+                                        "type": "text",
+                                        "label": "(M)"
+                                    },
+                                    {
+                                        "name": "13",
+                                        "type": "text",
+                                        "label": "(N)"
+                                    },
+                                    {
+                                        "name": "14",
+                                        "type": "text",
+                                        "label": "(O)"
+                                    },
+                                    {
+                                        "name": "15",
+                                        "type": "text",
+                                        "label": "(P)"
+                                    },
+                                    {
+                                        "name": "16",
+                                        "type": "text",
+                                        "label": "(Q)"
+                                    },
+                                    {
+                                        "name": "17",
+                                        "type": "text",
+                                        "label": "(R)"
+                                    },
+                                    {
+                                        "name": "18",
+                                        "type": "text",
+                                        "label": "(S)"
+                                    },
+                                    {
+                                        "name": "19",
+                                        "type": "text",
+                                        "label": "(T)"
+                                    },
+                                    {
+                                        "name": "20",
+                                        "type": "text",
+                                        "label": "(U)"
+                                    },
+                                    {
+                                        "name": "21",
+                                        "type": "text",
+                                        "label": "(V)"
+                                    },
+                                    {
+                                        "name": "22",
+                                        "type": "text",
+                                        "label": "(W)"
+                                    },
+                                    {
+                                        "name": "23",
+                                        "type": "text",
+                                        "label": "(X)"
+                                    },
+                                    {
+                                        "name": "24",
+                                        "type": "text",
+                                        "label": "(Y)"
+                                    },
+                                    {
+                                        "name": "25",
+                                        "type": "text",
+                                        "label": "(Z)"
+                                    },
+                                    {
+                                        "name": "26",
+                                        "type": "text",
+                                        "label": "(AA)"
+                                    },
+                                    {
+                                        "name": "27",
+                                        "type": "text",
+                                        "label": "(AB)"
+                                    },
+                                    {
+                                        "name": "28",
+                                        "type": "text",
+                                        "label": "(AC)"
+                                    },
+                                    {
+                                        "name": "29",
+                                        "type": "text",
+                                        "label": "(AD)"
+                                    },
+                                    {
+                                        "name": "30",
+                                        "type": "text",
+                                        "label": "(AE)"
+                                    },
+                                    {
+                                        "name": "31",
+                                        "type": "text",
+                                        "label": "(AF)"
+                                    },
+                                    {
+                                        "name": "32",
+                                        "type": "text",
+                                        "label": "(AG)"
+                                    },
+                                    {
+                                        "name": "33",
+                                        "type": "text",
+                                        "label": "(AH)"
+                                    },
+                                    {
+                                        "name": "34",
+                                        "type": "text",
+                                        "label": "(AI)"
+                                    },
+                                    {
+                                        "name": "35",
+                                        "type": "text",
+                                        "label": "(AJ)"
+                                    },
+                                    {
+                                        "name": "36",
+                                        "type": "text",
+                                        "label": "(AK)"
+                                    },
+                                    {
+                                        "name": "37",
+                                        "type": "text",
+                                        "label": "(AL)"
+                                    },
+                                    {
+                                        "name": "38",
+                                        "type": "text",
+                                        "label": "(AM)"
+                                    },
+                                    {
+                                        "name": "39",
+                                        "type": "text",
+                                        "label": "(AN)"
+                                    },
+                                    {
+                                        "name": "40",
+                                        "type": "text",
+                                        "label": "(AO)"
+                                    },
+                                    {
+                                        "name": "41",
+                                        "type": "text",
+                                        "label": "(AP)"
+                                    },
+                                    {
+                                        "name": "42",
+                                        "type": "text",
+                                        "label": "(AQ)"
+                                    },
+                                    {
+                                        "name": "43",
+                                        "type": "text",
+                                        "label": "(AR)"
+                                    },
+                                    {
+                                        "name": "44",
+                                        "type": "text",
+                                        "label": "(AS)"
+                                    },
+                                    {
+                                        "name": "45",
+                                        "type": "text",
+                                        "label": "(AT)"
+                                    },
+                                    {
+                                        "name": "46",
+                                        "type": "text",
+                                        "label": "(AU)"
+                                    },
+                                    {
+                                        "name": "47",
+                                        "type": "text",
+                                        "label": "(AV)"
+                                    },
+                                    {
+                                        "name": "48",
+                                        "type": "text",
+                                        "label": "(AW)"
+                                    },
+                                    {
+                                        "name": "49",
+                                        "type": "text",
+                                        "label": "(AX)"
+                                    },
+                                    {
+                                        "name": "50",
+                                        "type": "text",
+                                        "label": "(AY)"
+                                    },
+                                    {
+                                        "name": "51",
+                                        "type": "text",
+                                        "label": "(AZ)"
+                                    },
+                                    {
+                                        "name": "52",
+                                        "type": "text",
+                                        "label": "(BA)"
+                                    },
+                                    {
+                                        "name": "53",
+                                        "type": "text",
+                                        "label": "(BB)"
+                                    },
+                                    {
+                                        "name": "54",
+                                        "type": "text",
+                                        "label": "(BC)"
+                                    },
+                                    {
+                                        "name": "55",
+                                        "type": "text",
+                                        "label": "(BD)"
+                                    },
+                                    {
+                                        "name": "56",
+                                        "type": "text",
+                                        "label": "(BE)"
+                                    },
+                                    {
+                                        "name": "57",
+                                        "type": "text",
+                                        "label": "(BF)"
+                                    },
+                                    {
+                                        "name": "58",
+                                        "type": "text",
+                                        "label": "(BG)"
+                                    },
+                                    {
+                                        "name": "59",
+                                        "type": "text",
+                                        "label": "(BH)"
+                                    },
+                                    {
+                                        "name": "60",
+                                        "type": "text",
+                                        "label": "(BI)"
+                                    },
+                                    {
+                                        "name": "61",
+                                        "type": "text",
+                                        "label": "(BJ)"
+                                    },
+                                    {
+                                        "name": "62",
+                                        "type": "text",
+                                        "label": "(BK)"
+                                    },
+                                    {
+                                        "name": "63",
+                                        "type": "text",
+                                        "label": "(BL)"
+                                    },
+                                    {
+                                        "name": "64",
+                                        "type": "text",
+                                        "label": "(BM)"
+                                    },
+                                    {
+                                        "name": "65",
+                                        "type": "text",
+                                        "label": "(BN)"
+                                    },
+                                    {
+                                        "name": "66",
+                                        "type": "text",
+                                        "label": "(BO)"
+                                    },
+                                    {
+                                        "name": "67",
+                                        "type": "text",
+                                        "label": "(BP)"
+                                    },
+                                    {
+                                        "name": "68",
+                                        "type": "text",
+                                        "label": "(BQ)"
+                                    },
+                                    {
+                                        "name": "69",
+                                        "type": "text",
+                                        "label": "(BR)"
+                                    },
+                                    {
+                                        "name": "70",
+                                        "type": "text",
+                                        "label": "(BS)"
+                                    },
+                                    {
+                                        "name": "71",
+                                        "type": "text",
+                                        "label": "(BT)"
+                                    },
+                                    {
+                                        "name": "72",
+                                        "type": "text",
+                                        "label": "(BU)"
+                                    },
+                                    {
+                                        "name": "73",
+                                        "type": "text",
+                                        "label": "(BV)"
+                                    },
+                                    {
+                                        "name": "74",
+                                        "type": "text",
+                                        "label": "(BW)"
+                                    },
+                                    {
+                                        "name": "75",
+                                        "type": "text",
+                                        "label": "(BX)"
+                                    },
+                                    {
+                                        "name": "76",
+                                        "type": "text",
+                                        "label": "(BY)"
+                                    },
+                                    {
+                                        "name": "77",
+                                        "type": "text",
+                                        "label": "(BZ)"
+                                    },
+                                    {
+                                        "name": "78",
+                                        "type": "text",
+                                        "label": "(CA)"
+                                    },
+                                    {
+                                        "name": "79",
+                                        "type": "text",
+                                        "label": "(CB)"
+                                    },
+                                    {
+                                        "name": "80",
+                                        "type": "text",
+                                        "label": "(CC)"
+                                    },
+                                    {
+                                        "name": "81",
+                                        "type": "text",
+                                        "label": "(CD)"
+                                    },
+                                    {
+                                        "name": "82",
+                                        "type": "text",
+                                        "label": "(CE)"
+                                    },
+                                    {
+                                        "name": "83",
+                                        "type": "text",
+                                        "label": "(CF)"
+                                    },
+                                    {
+                                        "name": "84",
+                                        "type": "text",
+                                        "label": "(CG)"
+                                    },
+                                    {
+                                        "name": "85",
+                                        "type": "text",
+                                        "label": "(CH)"
+                                    },
+                                    {
+                                        "name": "86",
+                                        "type": "text",
+                                        "label": "(CI)"
+                                    },
+                                    {
+                                        "name": "87",
+                                        "type": "text",
+                                        "label": "(CJ)"
+                                    },
+                                    {
+                                        "name": "88",
+                                        "type": "text",
+                                        "label": "(CK)"
+                                    },
+                                    {
+                                        "name": "89",
+                                        "type": "text",
+                                        "label": "(CL)"
+                                    },
+                                    {
+                                        "name": "90",
+                                        "type": "text",
+                                        "label": "(CM)"
+                                    },
+                                    {
+                                        "name": "91",
+                                        "type": "text",
+                                        "label": "(CN)"
+                                    },
+                                    {
+                                        "name": "92",
+                                        "type": "text",
+                                        "label": "(CO)"
+                                    },
+                                    {
+                                        "name": "93",
+                                        "type": "text",
+                                        "label": "(CP)"
+                                    },
+                                    {
+                                        "name": "94",
+                                        "type": "text",
+                                        "label": "(CQ)"
+                                    },
+                                    {
+                                        "name": "95",
+                                        "type": "text",
+                                        "label": "(CR)"
+                                    },
+                                    {
+                                        "name": "96",
+                                        "type": "text",
+                                        "label": "(CS)"
+                                    },
+                                    {
+                                        "name": "97",
+                                        "type": "text",
+                                        "label": "(CT)"
+                                    },
+                                    {
+                                        "name": "98",
+                                        "type": "text",
+                                        "label": "(CU)"
+                                    },
+                                    {
+                                        "name": "99",
+                                        "type": "text",
+                                        "label": "(CV)"
+                                    },
+                                    {
+                                        "name": "100",
+                                        "type": "text",
+                                        "label": "(CW)"
+                                    },
+                                    {
+                                        "name": "101",
+                                        "type": "text",
+                                        "label": "(CX)"
+                                    },
+                                    {
+                                        "name": "102",
+                                        "type": "text",
+                                        "label": "(CY)"
+                                    },
+                                    {
+                                        "name": "103",
+                                        "type": "text",
+                                        "label": "(CZ)"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 93,
+                            "module": "util:TextAggregator",
+                            "version": 1,
+                            "parameters": {
+                                "feeder": 86,
+                                "rowSeparator": "\n"
+                            },
+                            "mapper": {
+                                "value": "Link: {{86.`1`}}\nVibe: {{86.`2`}}\n______________________________\n"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 751,
+                                    "y": -1
+                                },
+                                "restore": {
+                                    "extra": {
+                                        "feeder": {
+                                            "label": "Google Sheets - Search Rows [86]"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "rowSeparator": {
+                                            "label": "New row"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "rowSeparator",
+                                        "type": "select",
+                                        "label": "Row separator",
+                                        "validate": {
+                                            "enum": [
+                                                "\n",
+                                                "\t",
+                                                "other"
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "value",
+                                        "type": "text",
+                                        "label": "Text"
+                                    }
+                                ],
+                                "advanced": true
+                            }
+                        },
+                        {
+                            "id": 76,
+                            "module": "telegram:SendReplyMessage",
+                            "version": 1,
+                            "parameters": {
+                                "__IMTCONN__": 5416885
+                            },
+                            "mapper": {
+                                "text": "🔍 Here is what I found in your vault:\n\n{{if(93.text; \"✅ Found these in your vault:\" + newline + 93.text; \"❌ No results found. Try a different keyword like 'Tech' or 'Gaming'!\")}}",
+                                "chatId": "{{2.message.chat.id}}",
+                                "parseMode": "HTML",
+                                "replyMarkup": "",
+                                "messageThreadId": "",
+                                "replyToMessageId": "",
+                                "replyMarkupAssembleType": "reply_markup_enter"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 1345,
+                                    "y": 189
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "parseMode": {
+                                            "label": "HTML"
+                                        },
+                                        "disableNotification": {
+                                            "mode": "chose"
+                                        },
+                                        "replyMarkupAssembleType": {
+                                            "label": "Enter the Reply Markup"
+                                        }
+                                    },
+                                    "parameters": {
+                                        "__IMTCONN__": {
+                                            "data": {
+                                                "scoped": "true",
+                                                "connection": "telegram"
+                                            },
+                                            "label": "My Telegram Bot connection"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "__IMTCONN__",
+                                        "type": "account:telegram",
+                                        "label": "Connection",
+                                        "required": true
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "chatId",
+                                        "type": "text",
+                                        "label": "Chat ID",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "text",
+                                        "type": "text",
+                                        "label": "Text",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "messageThreadId",
+                                        "type": "number",
+                                        "label": "Message Thread ID"
+                                    },
+                                    {
+                                        "name": "parseMode",
+                                        "type": "select",
+                                        "label": "Parse Mode",
+                                        "validate": {
+                                            "enum": [
+                                                "Markdown",
+                                                "HTML"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "disableNotification",
+                                        "type": "boolean",
+                                        "label": "Disable Notifications"
+                                    },
+                                    {
+                                        "name": "disableWebPagePreview",
+                                        "type": "boolean",
+                                        "label": "Disable Link Previews"
+                                    },
+                                    {
+                                        "name": "replyToMessageId",
+                                        "type": "number",
+                                        "label": "Original Message ID"
+                                    },
+                                    {
+                                        "name": "replyMarkupAssembleType",
+                                        "type": "select",
+                                        "label": "Enter/Assemble the Reply Markup Field",
+                                        "validate": {
+                                            "enum": [
+                                                "reply_markup_enter",
+                                                "reply_markup_assemble"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "replyMarkup",
+                                        "type": "text",
+                                        "label": "Reply Markup"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "instant": true,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 10,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "eu1.make.com",
+        "notes": []
+    }
+}
